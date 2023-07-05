@@ -1,0 +1,17 @@
+;
+; BIND data file for local loopback interface
+;
+$TTL	604800
+@	IN	SOA	es.br. root.es.br. (
+			      1		; Serial
+			 604800		; Refresh
+			  86400		; Retry
+			2419200		; Expire
+			 604800 )	; Negative Cache TTL
+;
+@	IN  MX 10 mail.es.br.
+@	IN	NS	ns1.es.br.
+
+159	    IN PTR	mail.es.br.
+159		IN PTR	ns1.es.br.
+

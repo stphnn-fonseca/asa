@@ -1,0 +1,11 @@
+zone "es.br" { 
+	type master;
+	file "/etc/bind/db.es.br";
+	allow-transfer {any; };	
+};
+
+zone "1.25.10.in-addr.arpa" { 
+	type master;
+	file "/etc/bind/db.rv.es.br";	
+	allow-transfer {any; };		
+};

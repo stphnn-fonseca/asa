@@ -1,0 +1,85 @@
+services:
+  site1:
+    build:
+      context: ./teste-asa-1b/site1
+      dockerfile: Dockerfile
+    image: site1
+    container_name: site1
+    networks:
+    - asa-teste
+
+  site2:
+    build:
+      context: ./teste-asa-1b/site2
+      dockerfile: Dockerfile
+    image: site2
+    container_name: site2
+    networks:
+    - asa-teste
+
+  site3:
+    build:
+      context: ./teste-asa-1b/site3
+      dockerfile: Dockerfile
+    image: site3
+    container_name: site3
+    networks:
+    - asa-teste
+
+  dns:
+    build:
+      context: ./teste-asa-1b/dns/etc
+      dockerfile: Dockerfile
+    image: es
+    container_name: es
+    ports: 
+      - "53:53/tcp"
+      - "53:53/udp"
+    networks:
+      - asa-teste
+
+  email:
+    build:
+      context: ./teste-asa-1b/email
+      dockerfile: Dockerfile
+    image: email
+    container_name: email
+    ports: 
+      - "25:25/tcp"
+      - "587:587/tcp"
+      - "110:110/tcp"
+      - "143:143/tcp"
+    networks:
+      - asa-teste
+
+  segundario:
+    build:
+      context: ./teste-asa-1b/dns/segundario
+      dockerfile: Dockerfile
+    image: se
+    container_name: se
+    ports: 
+      - "5353:53/tcp"
+      - "5353:53/udp"
+    networks:
+      - asa-teste
+
+
+  proxy:
+    build:
+      context: ./teste-asa-1b/proxy
+      dockerfile: Dockerfile
+    image: proxy
+    container_name: proxy
+    ports:
+      - "8080:80"
+    depends_on:
+      - site1
+      - site2
+      - site3
+    networks:
+      - asa-teste
+#Docker Networks
+networks:
+ asa-teste:
+  driver: bridge
